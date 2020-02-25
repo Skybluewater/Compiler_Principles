@@ -75,7 +75,6 @@ swap:
 	.data
 space:	.asciiz " "
 head:	.asciiz "The sorted numbers are:\n"
-	.text
 print:	la $t0, nums		#load address of number array
 	lw $t1, size		#load integer of size of the array
 	la $a0, head		#print header
