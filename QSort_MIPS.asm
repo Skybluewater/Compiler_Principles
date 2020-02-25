@@ -2,7 +2,6 @@
 nums:	.word	8, 7, 2, 3, 10, 29, 21, 22, 6, 15, 22, 33, 45, 40, 100, 20, 33, 99, 0, 35
 size:	.word	20
 	.text
-	
 	addi $a0,$zero,0
 	addi $a1,$zero,19
 	jal quickSort
@@ -36,7 +35,7 @@ partition:
 	sll $t1,$a1,2
 	add $t2,$t1,$t0
 	lw $s2,0($t2) # pivot
-	addi $s0,$a0,-1 # i 
+	addi $s0,$a0,-1 # i
 	move $s1,$a0 # j
 forloop:
 	sll $t1,$s1,2
@@ -58,9 +57,9 @@ elsefor:
 	sw $s0,4($sp)
 	addi $sp,$sp,4
 	jr $ra
-	
+
 swap:
-	.text 
+	.text
 	sll $a2,$a2,2
 	sll $a3,$a3,2
 	la $t0,nums
@@ -75,6 +74,7 @@ swap:
 	.data
 space:	.asciiz " "
 head:	.asciiz "The sorted numbers are:\n"
+	.text
 print:	la $t0, nums		#load address of number array
 	lw $t1, size		#load integer of size of the array
 	la $a0, head		#print header
