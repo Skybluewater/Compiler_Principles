@@ -45,6 +45,7 @@ public class ExampleScanner implements IMiniCCScanner {
 
     private int lIndex = 0;
     private int cIndex = 0;
+    private int sumIndex = 0;
 
     private ArrayList<String> srcLines;
 
@@ -186,6 +187,7 @@ public class ExampleScanner implements IMiniCCScanner {
                 if (cIndex < line.length()) {
                     c = line.charAt(cIndex);
                     cIndex++;
+                    sumIndex++;
                     break;
                 } else {
                     lIndex++;
@@ -278,17 +280,17 @@ public class ExampleScanner implements IMiniCCScanner {
     }
 
     private String genToken(int num, String lexme, String type) {
-        return genToken(num, lexme, type, this.cIndex - 1, this.lIndex);
+        return genToken(num, lexme, type, this.cIndex - 1, this.lIndex, sumIndex);
     }
 
     private String genToken2(int num, String lexme, String type) {
-        return genToken(num, lexme, type, this.cIndex - 2, this.lIndex);
+        return genToken(num, lexme, type, this.cIndex - 2, this.lIndex, sumIndex - 1);
     }
 
-    private String genToken(int num, String lexme, String type, int cIndex, int lIndex) {
+    private String genToken(int num, String lexme, String type, int cIndex, int lIndex, int sumindex) {
         String strToken = "";
 
-        strToken += "[@" + num + "," + (cIndex - lexme.length() + 1) + ":" + cIndex;
+        strToken += "[@" + num + "," + (sumindex - lexme.length()) + ":" + (sumindex - 1);
         strToken += "='" + lexme + "',<" + type + ">," + (lIndex + 1) + ":" + (cIndex - lexme.length() + 1) + "]\n";
 
         return strToken;
@@ -351,9 +353,9 @@ public class ExampleScanner implements IMiniCCScanner {
                         lexme = lexme + c;
                         state = DFA_STATE.DFA_STATE_OP_1;
                     } else if (c == Character.MAX_VALUE) {
-                        cIndex = 5;
-                        strTokens += genToken(iTknNum, "<EOF>", "EOF");
                         end = true;
+                        strTokens += "[@" + iTknNum + "," + (sumIndex) + ":" + (sumIndex - 1);
+                        strTokens += "='" + "<EOF>" + "',<" + "EOF" + ">," + (lIndex + 1) + ":" + (cIndex - lexme.length()) + "]\n";
                     }
                     break;
                 case DFA_STATE_OP_1:
