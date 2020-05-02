@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Spliterators;
+import java.util.Stack;
 
 import bit.minisys.minicc.MiniCCCfg;
 import bit.minisys.minicc.internal.util.MiniCCUtil;
@@ -12,8 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import bit.minisys.minicc.parser.ast.ASTVisitor;
 
 enum Type{
-    INT,CHAR,FLOAT,DOUBLE,
-    VOID
+    INT,CHAR,FLOAT,DOUBLE,VOID
 }
 
 class FuncArray{
@@ -48,7 +48,7 @@ public class ExampleSemantic implements IMiniCCSemantic,ASTVisitor{
     public int binaryVar;
     public int ifFound;
     public boolean ifFoundParams;
-    public boolean ifIterationStmts;
+    public Stack<Integer> ifIterationStmts;
     public Type expectedType;
     public FuncArray[] funcArray = new FuncArray[10];
     public FuncArray[] funcDeclared = new FuncArray[10];
@@ -58,7 +58,7 @@ public class ExampleSemantic implements IMiniCCSemantic,ASTVisitor{
 
     @Override
     public String run(String ifile) throws Exception{
-        ifIterationStmts=false;
+        ifIterationStmts = new Stack<Integer>();
         ObjectMapper mapper = new ObjectMapper();
         ASTCompilationUnit prog= mapper.readValue(new File(ifile), ASTCompilationUnit.class);
         System.out.println("4. Running Semantic");
@@ -421,11 +421,11 @@ public class ExampleSemantic implements IMiniCCSemantic,ASTVisitor{
                 this.visit((ASTCompoundStatement) items);
                 currentFun--;
             } else if(items instanceof ASTIterationStatement) {
-                ifIterationStmts = true;
+                ifIterationStmts.push(1);
                 this.visit((ASTIterationStatement) items);
-                ifIterationStmts = false;
+                ifIterationStmts.pop();
             } else if(items instanceof ASTBreakStatement) {
-                if(!ifIterationStmts){
+                if(!ifIterationStmts.empty()){
                     System.out.println("ES03 break stat not in loop");
                 }
             }
