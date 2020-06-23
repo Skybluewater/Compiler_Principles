@@ -13,5 +13,3 @@ ExampleSemantic 实现012347
 
 ExampleICGen实现test.c
 并且使用了Symbol Table进行实现
-
-ExampleNCGen实现Fibonacci和Prime N
