@@ -11,7 +11,6 @@ This repo include 1 folder and inside the folder there are 5 files which are the
 
 ExampleSemantic 实现012347
 
-ExampleICGen实现test.c
-并且使用了Symbol Table进行实现
+ExampleICGen实现test.c并且使用了Symbol Table进行实现
 
-ExampleNCGen实现Fibonacci和Prime N
+ExampleNCGen汇编实现Fibonacci和Prime N
