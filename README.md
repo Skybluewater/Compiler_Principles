@@ -10,3 +10,6 @@ Assign3中是基于BitMINICC实现的Java词法分析模块
 This repo include 1 folder and inside the folder there are 5 files which are the realizations of Qsort in C, Java, Python, Haskell and MIPS(assemble language)
 
 ExampleSemantic 实现012347
+
+ExampleICGen实现test.c
+并且使用了Symbol Table进行实现
